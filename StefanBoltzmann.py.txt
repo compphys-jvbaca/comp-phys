@@ -1,0 +1,51 @@
+import math
+
+def midpoints(a,b,dy):
+    n = (b-a)/dy
+    print 'number of steps :', '{:4f}'.format(n)
+    w = (b-a)/n 
+    mdpts = []
+    l = a
+    r = l + w
+    while r <= b:
+        mdpts += [(l+r)/2.0]
+        l += w
+        r += w
+    return mdpts, w
+
+def reimann_sum(mdpts, w):        
+    area=0.0
+    for m in mdpts:
+        #print 'm', m
+        area += (m**3/(math.exp(m)-1))
+    tot_area = area*w
+    print ' integral =', tot_area 
+    return tot_area
+
+def stefboltz(a,b,dy):
+    print 'running...', '\n'
+    tot_area_old = 0.0
+    tot_area = 0.0
+    frac_diff = 1.0
+    
+    while frac_diff >= 0.000001:
+        mdpts, w = midpoints(a,b,dy)
+        tot_area_old = tot_area
+        print 'dy : ', '{0:.4f}'.format(dy),',',
+        tot_area = reimann_sum(mdpts,w)
+        frac_diff = math.fabs((tot_area - tot_area_old) / tot_area)
+        if frac_diff == 1.0:
+            print 'frac_diff : N/A', '\n'
+        else:
+            print 'frac_diff : ', frac_diff, '\n'
+        dy /= 2.0
+    
+    print 'The integral evaluated to within specified accuracy:', '{0:7f}'.format(tot_area)
+    print 'The upper limit of its fractional error is estimated to be:', frac_diff*100, '%'
+    print 'The correct answer is: ', math.pi**4/15.0
+    print 'The actual fractional error is:', (tot_area - math.pi**4/15.0) / tot_area * 100,
+    return '%'
+
+    
+print stefboltz(0.0,100.0,1)
+        
