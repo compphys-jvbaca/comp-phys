@@ -32,10 +32,6 @@ def Prime(a, b):
 
     return prime_lst
 
-#if __name__ == "__main__":
-#   import doctest
-#   doctest.testmod()
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', type = int)
 parser.add_argument('-b', type = int)
