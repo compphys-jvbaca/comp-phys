@@ -28,14 +28,18 @@ flights = [("Southwest",145,"DCA",1,6.00),\
 ("United",2032,"MIA",21,15.1),("SpamAir",1,"AUM",42,14.4)]
 
 airline_sort = sorted(flights) #sort flights list
-print 'Flight \t', 'Destination \t', 'Gate \t', 'Time'
-print '------------------------------------'
-for f in flights:
-	print f[0],f[1], '\t', airports[f[2]], '\t', f[3], '\t', f[4], '\t'  
-print airline_sort
+print 'Flight \t\t', 'Destination \t\t', 'Gate \t', 'Time'
+print '------------------------------------------------------'
+for f in airline_sort:
+	print f[0], f[1], '\t', '{0:15}'\
+	.format(airports[f[2]]), '\t', f[3], '\t', f[4]  
 
 
 time_sort = sorted(flights, key = lambda f : f[4]) #sort time list
-print '\n', time_sort
+print '\n'
 
-
+print 'Flight \t\t', 'Destination \t\t', 'Gate \t', 'Time'
+print '------------------------------------------------------'
+for f in time_sort:
+	print f[0], f[1], '\t', '{0:15}'\
+	.format(airports[f[2]]), '\t', f[3], '\t', f[4]  
