@@ -1,7 +1,3 @@
-"""
-
-A Dolphin Population Model
-Due 11pm on Thursday, Oct. 15, 2015
 
 Name: Jacob Baca
 Partner: Terry Tran
@@ -230,5 +226,5 @@ for i in range(1, 11):
     f_dolph_dic={'Kayak':Kayak, 'Tiffany':Tiffany}
     dead_dolph_dic={}
     
-    print 'n\', "***************************************************************", 'n\'
+    print '***************************************************************'
     
