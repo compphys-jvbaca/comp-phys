@@ -1,13 +1,22 @@
+"""
+
+A Dolphin Population Model
+Due 11pm on Thursday, Oct. 15, 2015
 
 Name: Jacob Baca
 Partner: Terry Tran
 
-Build a model for a dolohin population over 150 years. This will take a while
-to run because I am creating the list of names each trial. Sorry! I will change
-it in part B
+Build a model for a dolohin population over 150 years.
+
+This will take a whileto run because I am creating the 
+list of names each trial. Sorry! 
 
 """
 
+%matplotlib inline
+from pylab import *
+import matplotlib.pyplot as plt
+import numpy as np
 import random 
 import math
 import urllib2 
@@ -74,7 +83,7 @@ def name_generator(sex):
     female_name_lst = []
     z = 0 #number of pages iterated through
 
-    while z <=100: #iterates through baby-names website pages for names 
+    while z <=200: #iterates through baby-names website pages for names 
 
         m_names = 'http://www.prokerala.com/kids/baby-names/boy/page-' + str(z) + '.html'
         f_names = 'http://www.prokerala.com/kids/baby-names/girl/page-' + str(z) + '.html'
@@ -139,14 +148,13 @@ def creation(mother, father):
             mother.timeafter = 0
             father.timeafter = 0
             return male_babyboy
-            #m_dolph_dic[male_babyboy.name] = male_babyboy
         else:
             female_gener = female_generator.next()
             female_babygurl = Dolphins(female_gener, mother, father, gender) #creates instance
             mother.timeafter = 0
             father.timeafter = 0
             return female_babygurl
-            #f_dolph_dic[female_babygurl.name] = female_babygurl
+
 
 #these are the original 4 dolphin in the population:
 Jeffery = Dolphins('Jeffery', 'Todd Pinkins', 'Hilay sause', 'male')
@@ -156,28 +164,34 @@ Tiffany = Dolphins('Tiffany', 'dd Pis', 'Hil Fase', 'female')
 
 m_dolph_dic={'Jeffery':Jeffery, 'Carrot':Carrot}
 f_dolph_dic={'Kayak':Kayak, 'Tiffany':Tiffany}
-dead_dolph_dic={}
 
+dead_dolph_dic={}
+population_list_data = []
+male_generator = name_generator('male')
+female_generator = name_generator('female')
 print 'running...'
 for i in range(1, 11):
     
     print 'Trial No. ', i
+    active_maters = 0
     
-    male_generator = name_generator('male')
-    female_generator = name_generator('female')
+    population_list = []
+    
+
     
     for t in range(150): #this progresses through 150 years
+
+        population = len(m_dolph_dic.keys()) + len(f_dolph_dic.keys()) 
         if t==0 or t==25 or t==50 or t==75 or t==100 or t==125:
             print '#####################################################',\
                   '\n', 'Entering Year: ', t, 'with',\
-                  len(m_dolph_dic.keys()) + len(f_dolph_dic.keys()),\
-                'dolphins,', 'with', 'num', 'breeding.'
-
+                  population, 'dolphins,', 'with', active_maters, 'breeding.'
+            
         if t==149:
             print '#####################################################',\
                   '\n','At year', t, ', there are ',\
-                  len(m_dolph_dic.keys()) + len(f_dolph_dic.keys()),\
-                'living dolphins.'
+                  population, 'living dolphins.'
+        
         lst = []
 
         #male age dolphins
@@ -200,7 +214,6 @@ for i in range(1, 11):
             #print dolphin
             dol = f_dolph_dic[str(dolphin)]
             dol.aging()
-            #print 'dol.die() = ', dol.die(),int(dol.death), dol.age
             if dol.die() == True:
                 lst.append(dol)
 
@@ -221,10 +234,47 @@ for i in range(1, 11):
                 m_dolph_dic[dolphin.name]= dolphin
             else:
                 f_dolph_dic[dolphin.name]= dolphin
-                
+        
+        active_maters = 0
+        
+        for dolphin in m_dolph_dic: # counts the amount of dolphins able to breed
+            dol = m_dolph_dic[str(dolphin)]
+            if type(dol.timeafter) != int:
+                active_maters += 1 
+                #print active_maters
+        
+        for dolphin in f_dolph_dic:
+            dol = f_dolph_dic[dolphin]
+            if type(dol.timeafter) != int:
+                active_maters += 1
+        
+        population_list.append(population)
+        #print population_list
+    
+    population_list_data.append(population_list)
+    #print population_list_data
+        
     m_dolph_dic={'Jeffery':Jeffery, 'Carrot':Carrot} #restarting the dics
     f_dolph_dic={'Kayak':Kayak, 'Tiffany':Tiffany}
     dead_dolph_dic={}
     
-    print '***************************************************************'
-    
+    print "***************************************************************"
+
+ind=0
+data_lst = []
+while ind <= 151: #finds the average of the trials populations
+    data_pt = 0
+    for trial in population_list_data:
+        data_pt += trial[ind]
+    avg_data_list.append(data_pt/len(population_list_data))
+
+    ind+=1
+
+#plots the average
+x = np.asarray(avg_data_list)
+y = np.arange(0,150,1)
+plt.plot(y, x)
+plt.xlabel('Years')
+plt.ylabel('Dolphin Population')
+plt.title('Dolphin Population Evolution')
+plt.show()
