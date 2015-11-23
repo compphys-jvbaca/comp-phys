@@ -19,7 +19,7 @@ class Dates: #creates a date instance with attributes such as budget, location, 
 		self.location = location #at home or somewhere else
 		self.description = description # short description for more details
 		
-		Dates_Dictionary[self.name] = self #adds instance to Dates_Dictionary upon creation of date 
+		Dates_Dictionary[self.name] = self #automatically adds instance to Dates_Dictionary upon creation of date 
     
 	# def food(self, delivery == True):
         # if delivery == True:
@@ -44,8 +44,10 @@ def Date_Conversation(): #determines which date to go on
 	
 	################################################################
 	
-	#before looking at the daate_type we should sort through the Dates_Dictionary by location and put into a list 
-	#this will save us time and allow the program to run faster
+	#before looking at the daate_type we should sort through the
+	#Dates_Dictionary by location and cost and put into a list to
+	#reduce the indexing later on this will save us time and allow
+	#the program to run faster
 	
 	################################################################
 	
