@@ -12,7 +12,7 @@ Dates_Dictionary = {}	#contains all date instances created by Terry and Jacob
 
 class Dates: #creates a date instance with attributes such as budget, location, and type  
     
-    def __init__(self, name, type, cost, location):
+    def __init__(self, name, type, cost, location, description):
         self.name = name
 		self.type = type #food, movie, date, or travel
 		self.cost = cost #max amount of money date will cost
